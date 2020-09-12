@@ -22,7 +22,7 @@ public class Main {
 
         for (var student : students)
             System.out.println(student);
-        
+
         System.out.println("---");
 
         Merger.mergeSort(students, students.length);
