@@ -1,4 +1,4 @@
-package com.d0rj;
+package com.d0rj.task3;
 
 import java.util.Scanner;
 
