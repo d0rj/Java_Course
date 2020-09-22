@@ -1,4 +1,4 @@
-package com.d0rj;
+package com.d0rj.task1;
 
 
 public class Person {

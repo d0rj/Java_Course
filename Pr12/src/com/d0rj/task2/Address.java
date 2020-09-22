@@ -1,4 +1,4 @@
-package com.d0rj;
+package com.d0rj.task2;
 
 import java.util.StringTokenizer;
 
