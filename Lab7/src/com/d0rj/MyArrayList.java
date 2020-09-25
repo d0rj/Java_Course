@@ -112,9 +112,9 @@ public class MyArrayList<E> implements List<E> {
 
         for (int i = 0; i < count; ++i) {
             if (arr[i].equals(o)) {
-                for (int j = i + 1; j < count; ++j) {
-                    arr[j - 1] = arr[j];
-                }
+                // array shift to left
+                if (count - i + 1 >= 0)
+                    System.arraycopy(arr, i + 1, arr, i + 1 - 1, count - i + 1);
                 --count;
                 return true;
             }
@@ -202,8 +202,9 @@ public class MyArrayList<E> implements List<E> {
         if (capacity < size() + 1)
             reserve(capacity << 1);
 
-        for (int i = count - 1; i >= index; --i)
-            arr[i + 1] = arr[i];
+        // array shift to right
+        if (count - index >= 0)
+            System.arraycopy(arr, index, arr, index + 1, count - index);
 
         arr[index] = element;
         ++count;
@@ -217,9 +218,9 @@ public class MyArrayList<E> implements List<E> {
             throw new IndexOutOfBoundsException();
 
         var result = arr[index];
-        for (int i = index + 1; i < count; ++i) {
-            arr[i - 1] = arr[i];
-        }
+        // array shift to left
+        if (count - index + 1 >= 0)
+            System.arraycopy(arr, index + 1, arr, index + 1 - 1, count - index + 1);
         --count;
 
         return (E) result;
