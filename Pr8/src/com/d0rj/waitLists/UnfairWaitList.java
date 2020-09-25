@@ -1,5 +1,6 @@
 package com.d0rj.waitLists;
 
+import java.util.ArrayList;
 import java.util.NoSuchElementException;
 
 
@@ -9,8 +10,12 @@ import java.util.NoSuchElementException;
  */
 public class UnfairWaitList<E> extends WaitList<E> {
 
+    private ArrayList<E> deleted;
+
+
     public UnfairWaitList() {
         super();
+        deleted = new ArrayList<>();
     }
 
 
@@ -21,7 +26,8 @@ public class UnfairWaitList<E> extends WaitList<E> {
      */
     public void remove(E element) throws NoSuchElementException {
         for (var elem : content)
-            if (elem.equals(element)) {
+            if (elem.equals(element) && elem != content.peek()) {
+                deleted.add(elem);
                 content.remove(elem);
                 return;
             }
@@ -38,5 +44,12 @@ public class UnfairWaitList<E> extends WaitList<E> {
     public void moveToBack(E element) throws NoSuchElementException {
         remove(element);
         content.add(element);
+    }
+
+
+    @Override
+    public void add(E element) {
+        if (!deleted.contains(element))
+            super.add(element);
     }
 }
