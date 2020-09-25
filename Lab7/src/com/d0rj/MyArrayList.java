@@ -1,47 +1,37 @@
 package com.d0rj;
 
-import java.lang.reflect.Array;
-import java.lang.reflect.ParameterizedType;
 import java.util.*;
 
 
-public final class MyArrayList<E> implements List<E> {
+public class MyArrayList<E> implements List<E> {
 
     private int capacity;
     private int count;
-    private E[] arr;
-    private Class<E> typeOfT;
+    private Object[] arr;
+
+    private static final int DEFAULT_CAPACITY = 10;
 
 
     public MyArrayList() {
-        this.typeOfT = (Class<E>)
-                ((ParameterizedType)getClass()
-                        .getGenericSuperclass())
-                        .getActualTypeArguments()[0];
+        arr = new Object[DEFAULT_CAPACITY];
+        capacity = DEFAULT_CAPACITY;
+        count = 0;
     }
 
 
     public MyArrayList(int size) {
-        this.typeOfT = (Class<E>)
-                ((ParameterizedType)getClass()
-                        .getGenericSuperclass())
-                        .getActualTypeArguments()[0];
+        arr = new Object[0];
         reserve(size);
     }
 
 
-    private E[] createNewArray(int size) {
-        return (E[]) Array.newInstance(typeOfT, size);
-    }
-
-
     private boolean indexInBounds(int index) {
-        return index < 0 || index >= capacity;
+        return index >= 0 && index < count;
     }
 
 
     private void reserve(int newCapacity) {
-        var newArr = createNewArray(newCapacity);
+        var newArr = new Object[newCapacity];
         System.arraycopy(arr, 0, newArr, 0, capacity);
 
         arr = newArr;
@@ -73,7 +63,22 @@ public final class MyArrayList<E> implements List<E> {
 
     @Override
     public Iterator<E> iterator() {
-        return null;
+        return new Iterator<>() {
+
+            private int currentIndex = 0;
+
+
+            @Override
+            public boolean hasNext() {
+                return currentIndex + 1 <= count;
+            }
+
+
+            @Override
+            public E next() throws IndexOutOfBoundsException {
+                return (E)arr[currentIndex++];
+            }
+        };
     }
 
 
@@ -87,8 +92,8 @@ public final class MyArrayList<E> implements List<E> {
 
 
     @Override
-    public <T1> T1[] toArray(T1[] a) {
-        return null;
+    public <T> T[] toArray(T[] a) {
+        return (T[])toArray();
     }
 
 
@@ -138,19 +143,27 @@ public final class MyArrayList<E> implements List<E> {
 
     @Override
     public boolean addAll(int index, Collection<? extends E> c) {
-        return false;
+        for (var e : c)
+            add(index++, e);
+        return true;
     }
 
 
     @Override
     public boolean removeAll(Collection<?> c) {
-        return false;
+        for (var e : c)
+            if (contains(e))
+                remove(e);
+        return true;
     }
 
 
     @Override
     public boolean retainAll(Collection<?> c) {
-        return false;
+        for (int i = 0; i < count; ++i)
+            if (!c.contains(arr[i]))
+                remove(arr[i]);
+        return true;
     }
 
 
@@ -167,7 +180,7 @@ public final class MyArrayList<E> implements List<E> {
         if (!indexInBounds(index))
             throw new IndexOutOfBoundsException();
 
-        return arr[index];
+        return (E) arr[index];
     }
 
 
@@ -180,16 +193,24 @@ public final class MyArrayList<E> implements List<E> {
         var result = arr[index];
         arr[index] = element;
 
-        return result;
+        return (E) result;
     }
 
 
     @Override
     public void add(int index, E element) {
+        if (capacity < size() + 1)
+            reserve(capacity << 1);
 
+        for (int i = count - 1; i >= index; --i)
+            arr[i + 1] = arr[i];
+
+        arr[index] = element;
+        ++count;
     }
 
 
+    @SuppressWarnings("unchecked")
     @Override
     public E remove(int index) {
         if (!indexInBounds(index))
@@ -201,7 +222,7 @@ public final class MyArrayList<E> implements List<E> {
         }
         --count;
 
-        return result;
+        return (E) result;
     }
 
 
@@ -223,25 +244,94 @@ public final class MyArrayList<E> implements List<E> {
     }
 
 
+
     @Override
     public ListIterator<E> listIterator() {
-        return null;
+        return new ListIterator<E>();
     }
 
 
     @Override
     public ListIterator<E> listIterator(int index) {
-        return null;
+        return new ListIterator<>(index);
     }
 
 
     @Override
     public List<E> subList(int fromIndex, int toIndex) {
-        var slice = createNewArray(toIndex - fromIndex);
+        var result = new Object[count];
+        System.arraycopy(arr, 0, result, 0, count);
 
-        for (int i = 0; i < slice.length; ++i)
-            slice[i] = arr[fromIndex + i];
+        return (List<E>)Arrays.asList(result).subList(fromIndex, toIndex);
+    }
 
-        return Arrays.asList(slice);
+
+    private class ListIterator<T> implements java.util.ListIterator<T> {
+
+        private int currentIndex = 0;
+
+
+        private ListIterator() {
+            currentIndex = 0;
+        }
+
+
+        private ListIterator(int currentIndex) {
+            this.currentIndex = currentIndex;
+        }
+
+
+        @Override
+        public boolean hasNext() {
+            return currentIndex + 1 <= count;
+        }
+
+
+        @Override
+        public T next() {
+            return (T)arr[currentIndex++];
+        }
+
+
+        @Override
+        public boolean hasPrevious() {
+            return count < currentIndex - 1;
+        }
+
+
+        @Override
+        public T previous() {
+            return (T)arr[--currentIndex];
+        }
+
+
+        @Override
+        public int nextIndex() {
+            return currentIndex;
+        }
+
+
+        @Override
+        public int previousIndex() {
+            return currentIndex - 1;
+        }
+
+
+        @Override
+        public void remove() {
+            MyArrayList.this.remove(currentIndex);
+        }
+
+
+        @Override
+        public void set(T e) {
+            MyArrayList.this.set(currentIndex, (E)e);
+        }
+
+
+        @Override
+        public void add(T e) {
+            MyArrayList.this.add((E)e);
+        }
     }
 }
