@@ -1,7 +1,7 @@
 package com.d0rj;
 
 
-public final class Drink {
+public final class Drink implements Item {
 
     private final int cost;
     private final String name;
@@ -22,6 +22,7 @@ public final class Drink {
         this.name = name;
         this.description = description;
     }
+
 
     public int getCost() {
         return cost;
