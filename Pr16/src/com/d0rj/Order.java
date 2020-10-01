@@ -1,19 +1,15 @@
 package com.d0rj;
 
-import com.d0rj.utils.MyArrayList;
 
+public interface Order {
 
-public class Order {
-
-    private MyArrayList<Item> items;
-
-
-    public boolean add(Item item) {
-        return items.add(item);
-    }
-
-
-    public boolean remove(Item item) {
-        return items.remove(item);
-    }
+    boolean add(Item item);
+    boolean removeByName(String name);
+    int removeAllByName(String name);
+    int getCount();
+    Item[] toArray();
+    int getOrderPrice();
+    int countOf(String name);
+    String[] allNames();
+    Item[] toSortedArray();
 }

@@ -267,6 +267,14 @@ public class MyArrayList<E> implements List<E> {
     }
 
 
+    public E at(int index) throws IndexOutOfBoundsException {
+        if (indexInBounds(index))
+            return (E)arr[index];
+
+        throw new IndexOutOfBoundsException();
+    }
+
+
     private class ListIterator<T> implements java.util.ListIterator<T> {
 
         private int currentIndex = 0;
