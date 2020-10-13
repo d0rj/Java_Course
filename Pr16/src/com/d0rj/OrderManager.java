@@ -1,6 +1,7 @@
 package com.d0rj;
 
 
+import com.d0rj.exceptions.OrderAlreadyAddedException;
 import java.util.HashMap;
 
 
@@ -9,8 +10,12 @@ public final class OrderManager {
     private HashMap<String, Order> addressOrder;
 
 
-    public void add(String address, Order order) {
-        addressOrder.put(address, order);
+    public void add(String address, Order order) throws OrderAlreadyAddedException {
+        if (!addressOrder.containsKey(address))
+            addressOrder.put(address, order);
+        else {
+            throw new OrderAlreadyAddedException(order);
+        }
     }
 
 

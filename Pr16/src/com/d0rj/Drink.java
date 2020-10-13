@@ -10,7 +10,10 @@ public final class Drink implements Item {
     public static final int DEFAULT_COST = 0;
 
 
-    public Drink(String name, String description) {
+    public Drink(String name, String description) throws IllegalArgumentException {
+        if (name.equals("") || name.isEmpty() || description.equals("") || description.isEmpty())
+            throw new IllegalArgumentException();
+
         this.cost = DEFAULT_COST;
         this.name = name;
         this.description = description;
@@ -18,6 +21,9 @@ public final class Drink implements Item {
 
 
     public Drink(int cost, String name, String description) {
+        if (name.equals("") || name.isEmpty() || description.equals("") || description.isEmpty() || cost < 0)
+            throw new IllegalArgumentException();
+
         this.cost = cost;
         this.name = name;
         this.description = description;

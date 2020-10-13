@@ -8,7 +8,10 @@ public final class Dish implements Item {
     private final String description;
 
 
-    public Dish(int cost, String name, String description) {
+    public Dish(int cost, String name, String description) throws IllegalArgumentException {
+        if (name.equals("") || name.isEmpty() || description.equals("") || description.isEmpty() || cost < 0)
+            throw new IllegalArgumentException();
+
         this.cost = cost;
         this.name = name;
         this.description = description;
