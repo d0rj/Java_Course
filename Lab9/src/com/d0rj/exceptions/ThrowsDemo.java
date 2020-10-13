@@ -28,7 +28,7 @@ public class ThrowsDemo {
     }
 
 
-    public String getDetails(String key) throws Exception {
+    public String getDetails(String key) throws NullPointerException {
         if (key.equals("")) {
             throw new NullPointerException("null key in ThrowsDemo.getDetails");
         }
