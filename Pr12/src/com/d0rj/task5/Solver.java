@@ -54,7 +54,7 @@ public class Solver {
             wordsList.remove("");
 
         // решение)))
-        while (isContinues(wordsList)) {
+        while (!isContinues(wordsList)) {
             Collections.shuffle(wordsList);
         }
 
@@ -73,9 +73,9 @@ public class Solver {
             var secondWord = wordsList.get(i + 1).toLowerCase();
 
             if (firstWord.toLowerCase().charAt(firstWord.length() - 1) != secondWord.toLowerCase().charAt(0))
-                return true;
+                return false;
         }
 
-        return false;
+        return true;
     }
 }
