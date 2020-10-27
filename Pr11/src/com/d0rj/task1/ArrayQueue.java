@@ -1,7 +1,7 @@
 package com.d0rj.task1;
 
 
-public class ArrayQueue<T> {
+public class ArrayQueue<T> implements IQueue<T> {
 
     private Object[] array;
     private int size;
@@ -34,7 +34,7 @@ public class ArrayQueue<T> {
     }
 
 
-    public void Enqueue(Object newElement) throws IllegalArgumentException
+    public void Enqueue(T newElement) throws IllegalArgumentException
     {
         if (newElement == null)
             throw new IllegalArgumentException();

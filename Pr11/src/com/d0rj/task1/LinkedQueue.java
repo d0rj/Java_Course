@@ -1,22 +1,22 @@
 package com.d0rj.task1;
 
 
-public class ArrayQueueADT<E> {
+public class LinkedQueue<E> implements IQueue<E> {
 
-    private ArrayQueueModule<E> head;
+    private LinkedQueueModule<E> head;
 
 
     public void Enqueue(E element) {
         if (head == null) {
-            head = new ArrayQueueModule<>(element);
+            head = new LinkedQueueModule<>(element);
             return;
         }
 
-        ArrayQueueModule<E> prevModule = head;
+        LinkedQueueModule<E> prevModule = head;
         while (prevModule.getPrev() != null)
             prevModule = prevModule.getPrev();
 
-        prevModule.setPrev(new ArrayQueueModule<>(element, prevModule, null));
+        prevModule.setPrev(new LinkedQueueModule<>(element, prevModule, null));
     }
 
 
