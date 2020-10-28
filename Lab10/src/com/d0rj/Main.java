@@ -11,11 +11,5 @@ public class Main {
 
         System.out.println(elem);
         System.out.println(num);
-
-        var listOfNums = Solution.newArrayList(nums);
-        var hashSet = Solution.newHashSet(arr);
-        var hashMap = Solution.newHashMap(arr, nums);
-
-        System.out.println(hashMap);
     }
 }

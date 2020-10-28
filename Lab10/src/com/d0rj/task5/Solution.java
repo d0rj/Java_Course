@@ -1,4 +1,4 @@
-package com.d0rj;
+package com.d0rj.task5;
 
 import java.util.ArrayList;
 import java.util.Arrays;
