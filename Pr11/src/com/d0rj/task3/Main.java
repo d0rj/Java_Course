@@ -19,16 +19,16 @@ public class Main {
 
         try {
             result = new Add(
-                    new Subtract(
-                            new Multiply(new Variable("x"), new Variable("x")),
-                            new Multiply(new Const(2), new Variable("x"))
+                    new Add(
+                            new Square(new Variable("x")),
+                            new UnaryMinus(new Multiply(new Const(2), new Variable("x")))
                     ),
                     new Const(1)
             ).Evaluate(variables);
 
         } catch (MissingVariableValue e) {
             System.out.println("Error!");
-            e.printStackTrace();
+            System.out.println(e.getMessage());
             return;
         }
 

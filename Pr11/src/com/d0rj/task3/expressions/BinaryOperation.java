@@ -32,14 +32,16 @@ public abstract class BinaryOperation implements IValue {
         try {
             leftValue = left.Evaluate();
         } catch (MissingVariableValue e) {
-            String message = "Missing variable value in: " + left.toString() + ".";
+            String message = e.getMessage();
+            message += "\n\t" + "Missing variable value in: " + left.toString() + ".";
             throw new MissingVariableValue(message);
         }
 
         try {
             rightValue = right.Evaluate();
         } catch (MissingVariableValue e) {
-            String message = "Missing variable value in: " + right.toString() + ".";
+            String message = e.getMessage();
+            message += "\n\t" + "Missing variable value in: " + right.toString() + ".";
             throw new MissingVariableValue(message);
         }
 
@@ -57,14 +59,16 @@ public abstract class BinaryOperation implements IValue {
         try {
             leftValue = left.Evaluate(variableValues);
         } catch (MissingVariableValue e) {
-            String message = "Missing variable value in: " + left.toString() + ".";
+            String message = e.getMessage();
+            message += "\n\t" + "Missing variable value in: " + left.toString() + ".";
             throw new MissingVariableValue(message);
         }
 
         try {
             rightValue = right.Evaluate(variableValues);
         } catch (MissingVariableValue e) {
-            String message = "Missing variable value in: " + right.toString() + ".";
+            String message = e.getMessage();
+            message += "\n\t" + "Missing variable value in: " + right.toString() + ".";
             throw new MissingVariableValue(message);
         }
 
