@@ -28,6 +28,6 @@ public final class Pow extends BinaryOperation {
 
     @Override
     public String toString() {
-        return "(" + left.toString() + getSymbol() + "(" + right.toString() + ")" + ")";
+        return "(" + "(" + left.toString() + ")" + getSymbol() + "(" + right.toString() + ")" + ")";
     }
 }
