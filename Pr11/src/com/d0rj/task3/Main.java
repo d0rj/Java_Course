@@ -1,6 +1,7 @@
 package com.d0rj.task3;
 
 import com.d0rj.task3.expressions.*;
+import com.d0rj.task3.parser.ExpressionParser;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,13 +19,7 @@ public class Main {
         double result;
 
         try {
-            result = new Add(
-                    new Add(
-                            new Square(new Variable("x")),
-                            new UnaryMinus(new Multiply(new Const(2), new Variable("x")))
-                    ),
-                    new Const(1)
-            ).Evaluate(variables);
+            result = ExpressionParser.Parse("4 * x / 2 + 1").Evaluate(variables);
 
         } catch (MissingVariableValue e) {
             System.out.println("Error!");

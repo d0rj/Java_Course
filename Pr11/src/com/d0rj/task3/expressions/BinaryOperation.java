@@ -15,6 +15,14 @@ public abstract class BinaryOperation implements IValue {
     }
 
 
+    public void setLeft(IValue left) {
+        this.left = left;
+    }
+
+    public void setRight(IValue right) {
+        this.right = right;
+    }
+
     protected abstract String getSymbol();
 
 
