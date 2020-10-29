@@ -19,7 +19,7 @@ public class Main {
         double result;
 
         try {
-            result = ExpressionParser.Parse("x^2 +  2* 5 + 1").Evaluate(variables);
+            result = ExpressionParser.Parse("x^2 -  x + 1").Evaluate(variables);
 
         } catch (MissingVariableValue e) {
             System.out.println("Error!");
