@@ -19,11 +19,14 @@ public class Main {
         double result;
 
         try {
-            result = ExpressionParser.Parse("x").Evaluate(variables);
+            result = ExpressionParser.Parse("x^2 +  2* 5 + 1").Evaluate(variables);
 
         } catch (MissingVariableValue e) {
             System.out.println("Error!");
             System.out.println(e.getMessage());
+            return;
+        } catch (IllegalArgumentException e) {
+            System.out.println("Invalid input string.");
             return;
         }
 

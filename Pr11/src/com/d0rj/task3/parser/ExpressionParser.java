@@ -54,15 +54,28 @@ public final class ExpressionParser {
             IValue rightValue;
 
             if (currentValue == null) {
-                var left = values.remove(0);
-                var right = values.remove(0);
+                String left, right;
+
+                // Can't get first or second argument
+                try {
+                    left = values.remove(0);
+                    right = values.remove(0);
+                } catch (IndexOutOfBoundsException e) {
+                    throw new IllegalArgumentException();
+                }
 
                 leftValue = toValue(left);
                 rightValue = toValue(right);
             }
             else {
                 leftValue = currentValue;
-                rightValue = toValue(values.remove(0));
+
+                // Can't get second argument
+                try {
+                    rightValue = toValue(values.remove(0));
+                } catch (IndexOutOfBoundsException e) {
+                    throw new IllegalArgumentException();
+                }
             }
 
             BinaryOperation op = switch (operator) {
@@ -172,9 +185,11 @@ public final class ExpressionParser {
                 continue;
             }
 
-            throw new IllegalArgumentException("WTF");
+            // Unknown token
+            throw new IllegalArgumentException();
         }
 
+        // Last token
         if (tempToken.length() > 0)
             result.add(tempToken.toString());
 
