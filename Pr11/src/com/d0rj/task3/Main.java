@@ -19,7 +19,7 @@ public class Main {
         double result;
 
         try {
-            result = ExpressionParser.Parse("4 * x / 2 + 1").Evaluate(variables);
+            result = ExpressionParser.Parse("x").Evaluate(variables);
 
         } catch (MissingVariableValue e) {
             System.out.println("Error!");

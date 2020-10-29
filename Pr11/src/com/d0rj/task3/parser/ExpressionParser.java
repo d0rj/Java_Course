@@ -33,6 +33,10 @@ public final class ExpressionParser {
         tokens = infixToPostFix(tokens.toArray(new String[0]));
         tokens.removeIf((x) -> x.equals("(") || x.equals(")"));
 
+        if (tokens.size() == 1) {
+            return toValue(tokens.get(0));
+        }
+
         var values = new ArrayList<String>();
         for (var token : tokens)
             if (isNumeric(token) || isVariable(token))
@@ -92,10 +96,7 @@ public final class ExpressionParser {
 
 
     private static boolean isVariable(String strVar) {
-        Pattern pattern = Pattern.compile(VarPattern);
-        Matcher matcher = pattern.matcher(strVar);
-
-        return matcher.find();
+        return Pattern.compile(VarPattern).matcher(strVar).find();
     }
 
 
@@ -201,8 +202,8 @@ public final class ExpressionParser {
                     result.add(stack.pop());
                 }
                 stack.push(c);
-
-            } else if (c.equals(")")) {
+            }
+            else if (c.equals(")")) {
                 String x = stack.pop();
 
                 while (!x.equals("(")) {
@@ -210,10 +211,11 @@ public final class ExpressionParser {
                     x = stack.pop();
                 }
 
-            } else if (c.equals("(")) {
+            }
+            else if (c.equals("(")) {
                 stack.push(c);
-
-            } else {
+            }
+            else {
                 result.add(c);
             }
         }
