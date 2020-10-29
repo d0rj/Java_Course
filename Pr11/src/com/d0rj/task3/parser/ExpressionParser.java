@@ -3,7 +3,6 @@ package com.d0rj.task3.parser;
 import com.d0rj.task3.expressions.*;
 
 import java.util.*;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
@@ -78,7 +77,7 @@ public final class ExpressionParser {
                 }
             }
 
-            BinaryOperation op = switch (operator) {
+            currentValue = switch (operator) {
                 case "+" -> new Add(leftValue, rightValue);
                 case "-" -> new Subtract(leftValue, rightValue);
                 case "*" -> new Multiply(leftValue, rightValue);
@@ -86,8 +85,6 @@ public final class ExpressionParser {
                 case "^" -> new Pow(leftValue, rightValue);
                 default -> throw new IllegalArgumentException();
             };
-
-            currentValue = op;
         }
 
         return currentValue;
