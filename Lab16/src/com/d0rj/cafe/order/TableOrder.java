@@ -11,6 +11,11 @@ public class TableOrder implements Order {
     private ArrayList<MenuItem> items = new ArrayList<>();
 
 
+    public TableOrder() {
+
+    }
+
+
     public TableOrder(Customer customer) {
         this.customer = customer;
     }
