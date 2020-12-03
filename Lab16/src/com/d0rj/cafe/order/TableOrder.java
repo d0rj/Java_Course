@@ -39,11 +39,7 @@ public class TableOrder implements Order {
 
     @Override
     public int itemsQuantity() {
-        var result = 0;
-        for (var item : items)
-            result += item.getCost();
-
-        return result;
+        return items.size();
     }
 
 
@@ -52,7 +48,7 @@ public class TableOrder implements Order {
         var result = 0;
         for (var item : items)
             if (item.getName().equals(itemName))
-                result += item.getCost();
+                ++result;
         return result;
     }
 
@@ -62,7 +58,7 @@ public class TableOrder implements Order {
         var result = 0;
         for (var i : items)
             if (i.equals(item))
-                result += item.getCost();
+                ++result;
         return result;
     }
 
@@ -117,7 +113,11 @@ public class TableOrder implements Order {
 
     @Override
     public int costTotal() {
-        return itemsQuantity();
+        var result = 0;
+        for (var item : items)
+            result += item.getCost();
+
+        return result;
     }
 
 

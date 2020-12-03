@@ -59,13 +59,7 @@ public class InternetOrder implements Order {
 
     @Override
     public int itemsQuantity() {
-        var result = 0;
-
-        LinkedListNode<MenuItem> current;
-        for (current = head; current != null; current = current.getNext())
-            result += current.getData().getCost();
-
-        return result;
+        return size;
     }
 
 
@@ -76,7 +70,7 @@ public class InternetOrder implements Order {
         LinkedListNode<MenuItem> current;
         for (current = head; current != null; current = current.getNext()) {
             if (current.getData().getName().equals(itemName))
-                result += current.getData().getCost();
+                ++result;
         }
 
         return result;
@@ -90,7 +84,7 @@ public class InternetOrder implements Order {
         LinkedListNode<MenuItem> current;
         for (current = head; current != null; current = current.getNext()) {
             if (current.getData().equals(item))
-                result += current.getData().getCost();
+                ++result;
         }
 
         return result;
@@ -194,7 +188,13 @@ public class InternetOrder implements Order {
 
     @Override
     public int costTotal() {
-        return itemsQuantity();
+        var result = 0;
+
+        LinkedListNode<MenuItem> current;
+        for (current = head; current != null; current = current.getNext())
+            result += current.getData().getCost();
+
+        return result;
     }
 
 
