@@ -8,7 +8,14 @@ public class MenuItem {
     private String description;
 
 
-    public MenuItem(int cost, String name, String description) {
+    public MenuItem(int cost, String name, String description) throws IllegalArgumentException {
+        if (cost < 0)
+            throw new IllegalArgumentException("Cost must be non-negative.");
+        if (name.isEmpty() || name.isBlank())
+            throw new IllegalArgumentException("MenuItem's name must be non-empty.");
+        if (description.isEmpty() || description.isBlank())
+            throw new IllegalArgumentException("MenuItem's description must be non-empty.");
+
         this.cost = cost;
         this.name = name;
         this.description = description;

@@ -1,5 +1,7 @@
 package com.d0rj.cafe.order;
 
+import com.d0rj.cafe.exceptions.IllegalOrderAddress;
+import com.d0rj.cafe.exceptions.OrderAlreadyAddedException;
 import com.d0rj.cafe.interfaces.Order;
 import com.d0rj.cafe.menu.MenuItem;
 
@@ -11,7 +13,11 @@ public class OrderManager<T extends Order> {
     private HashMap<String, T> orders = new HashMap<>();
 
 
-    public void add(T order, String address) {
+    public void add(T order, String address) throws OrderAlreadyAddedException {
+
+        if (orders.containsKey(address))
+            throw new OrderAlreadyAddedException();
+
         orders.put(address, order);
     }
 
@@ -21,12 +27,18 @@ public class OrderManager<T extends Order> {
     }
 
 
-    public T getOrder(String address) {
+    public T getOrder(String address) throws IllegalOrderAddress {
+        if (!orders.containsKey(address))
+            throw new IllegalOrderAddress(address);
+
         return orders.get(address);
     }
 
 
     public void remove(String address) {
+        if (!orders.containsKey(address))
+            throw new IllegalOrderAddress(address);
+
         orders.remove(address);
     }
 

@@ -25,10 +25,10 @@ public class MainWindow extends JFrame {
     };
 
     private static final Dish[] dishes = new Dish[] {
-            new Dish(200, "Курица", ""),
-            new Dish(200, "Мясо", ""),
-            new Dish(200, "Рыба", ""),
-            new Dish(99, "Попкорн", ""),
+            new Dish(200, "Курица", "Грудка"),
+            new Dish(200, "Мясо", "Стейк"),
+            new Dish(200, "Рыба", "Жареный рыбный стейк"),
+            new Dish(99, "Попкорн", "Просто солёный попкорн"),
     };
 
 

@@ -9,7 +9,7 @@ public final class Drink extends MenuItem implements Alcoholable {
     private final DrinkTypeEnum type;
 
 
-    public Drink(int cost, String name, String description, double alcoholVol, DrinkTypeEnum type) {
+    public Drink(int cost, String name, String description, double alcoholVol, DrinkTypeEnum type) throws IllegalArgumentException {
         super(cost, name, description);
         this.alcoholVol = alcoholVol;
         this.type = type;
